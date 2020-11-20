@@ -1,0 +1,11 @@
+{
+  "name": "caesar-cipher",
+  "version": "1.0.0",
+  "description": "caesar cipher",
+  "main": "'./src/app.js'",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "'Alexey Radziuk'",
+  "license": "ISC"
+}
