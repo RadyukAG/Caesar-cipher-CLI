@@ -1,3 +1,8 @@
+const options = require('./utils/options');
 const process = require('process');
-const args = require('minimist')(process.argv.slice(2));
-console.log(args);
+process.stdin.resume();
+process.stdin.setEncoding('utf-8');
+process.stdin.on('data', (data) => {
+    console.log(data.slice(1));
+})
+console.log(options);
