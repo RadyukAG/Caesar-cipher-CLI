@@ -2,12 +2,13 @@ const abc = require('../data/data');
 
 function encode(shift) {
     return function (chunk) {
-        const result = chunk.split('').map((el) => {
+        const result = chunk.toString('utf-8').split('').map((el) => {
             const idx = abc.indexOf(el);
             if (idx < 0) {
                 return el;
             }
-            return idx + shift < abc.length ? abc[idx + shift] : abc[idx + shift - (abc.length - 1)];
+            const newIdx = idx + shift;
+            return newIdx < abc.length ? abc[newIdx] : abc[newIdx - abc.length];
         });
         return result.join('');
     }
@@ -15,7 +16,7 @@ function encode(shift) {
 
 function decode(shift) {
     return function (chunk) {
-        const result = chunk.split('').map((el) => {
+        const result = chunk.toString('utf-8').split('').map((el) => {
             const idx = abc.indexOf(el);
             if (idx < 0) {
                 return el;
@@ -28,7 +29,7 @@ function decode(shift) {
 }
 
 const streamTransform = function (action, shift) {
-    return action === 'encode' ? encode : decode;
+    return action === 'encode' ? encode(shift) : decode(shift);
 }
 
 module.exports = streamTransform;

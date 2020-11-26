@@ -1,8 +1,21 @@
 const options = require('./utils/options');
-const process = require('process');
-process.stdin.resume();
-process.stdin.setEncoding('utf-8');
-process.stdin.on('data', (data) => {
-    console.log(data.slice(1));
-})
-console.log(options);
+const codeStreams = require('./utils/codeStreams');
+const optionsCheck = require('./utils/optionsCheck');
+const stream = require('stream');
+
+optionsCheck(options);
+const { streamInput, streamTransform, streamOutput } = codeStreams(options);
+
+stream.pipeline(
+    streamInput,
+    streamTransform,
+    streamOutput,
+    (err) => {
+        if (err) {
+            console.error('An error has occurred: ', err);
+        }
+        else {
+            console.log('Done!');
+        }
+    }
+);
